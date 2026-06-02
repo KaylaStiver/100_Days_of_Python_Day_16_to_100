@@ -9,6 +9,7 @@ class Snake:
         self.snake_body = []
         self.screen = Screen()
 
+    def create(self):
         for snake in range(3):
             new_segment = Turtle("square")
             new_segment.color("white")
@@ -18,6 +19,13 @@ class Snake:
         for segment in self.snake_body:
             segment.goto(spacing, 0)
             spacing += -20
+
+    def extend(self):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(self.snake_body[-1].position())
+        self.snake_body.append(new_segment)
 
     def move(self):
         self.screen.update()
