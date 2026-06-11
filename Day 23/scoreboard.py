@@ -1,5 +1,22 @@
+from turtle import Turtle
+
 FONT = ("Courier", 24, "normal")
 
 
-class Scoreboard:
-    pass
+class Scoreboard(Turtle):
+    def __init__(self):
+        super().__init__()
+        self.penup()
+        self.hideturtle()
+        self.player_score = 0
+        self.update_score()
+
+    def update_score(self):
+        self.clear()
+        self.goto(-200, 250)
+        self.write(f"Level: {self.player_score}", align="center", font=FONT)
+        self.goto(0, 220)
+
+    def game_over(self):
+        self.goto(0, 0)
+        self.write(f"Game Over!", align="center", font=FONT)

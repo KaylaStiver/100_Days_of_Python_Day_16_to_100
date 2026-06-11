@@ -11,7 +11,6 @@ class Scoreboard(Turtle):
         self.enemy_score = 0
         self.update_score()
 
-
     def update_score(self):
         self.clear()
         self.goto(-60, 220)
@@ -20,3 +19,4 @@ class Scoreboard(Turtle):
         self.write("-", align="center", font=("Courier", 40, "normal"))
         self.goto(60, 220)
         self.write(self.user_score, align="center", font=("Courier", 40, "normal"))
+
