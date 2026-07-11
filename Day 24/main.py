@@ -2,5 +2,6 @@
 #     contents = file.read()
 #     print(contents)
 
-with open("new_file.txt", mode="w") as file:
-    file.write("New file!!")
+with open("../../.././OneDrive/Desktop/my_file.txt", mode="r") as file:
+    contents = file.read()
+    print(contents)
