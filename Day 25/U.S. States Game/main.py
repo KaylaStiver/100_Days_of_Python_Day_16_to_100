@@ -12,12 +12,15 @@ data.state = data.state.str.lower()
 data.x = data.x.astype(float)
 data.y = data.y.astype(float)
 correct_answer_list = []
+missed_states_list = []
 user_answer = ""
 
 while len(correct_answer_list) < len(data):
     user_answer = turtle.textinput(f"{len(correct_answer_list)}/50 correct", "Enter a state")
     if user_answer is not None:
         user_answer = user_answer.lower()
+    if user_answer == "exit":
+        break
     for row in data.itertuples():
         if user_answer == row.state and user_answer not in correct_answer_list:
             correct_answer_list.append(row.state)
@@ -29,5 +32,12 @@ while len(correct_answer_list) < len(data):
             state_text.goto(state_xcor, state_ycor)
             state_text.write(f"{row.state}", align="center", font=("Courier", 12, "normal"))
 
-turtle.mainloop()
+for row in data.itertuples():
+    for state in correct_answer_list:
+        if row.state == state:
+            continue
+        else:
+            missed_states_list.append(row.state)
 
+with open("states_to_learn.csv", "w") as file:
+    file.write("\n".join(missed_states_list))
