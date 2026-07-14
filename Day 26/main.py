@@ -21,7 +21,7 @@ for (index, row) in student_data_frame.iterrows():
 # {new_key:new_value for (index, row) in df.iterrows()}
 
 data = pandas.read_csv("nato_phonetic_alphabet.csv")
-nato_alphabet_dict = {row.letter: row.code for index, row in data.iterrows()}
+nato_alphabet_dict = {row.letter: row.code for (index, row) in data.iterrows()}
 
 user_word = input("Enter a word: ")
 user_word_letters = list(user_word.upper())
