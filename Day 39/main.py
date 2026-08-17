@@ -2,6 +2,8 @@
 
 import requests
 from data_manager import DataManager
+from pprint import pprint
 
-test = DataManager()
-test.get_data()
+data_manager = DataManager()
+sheet_data = data_manager.get_data()
+pprint(sheet_data)
