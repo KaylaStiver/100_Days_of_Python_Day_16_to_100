@@ -4,6 +4,7 @@ from data_manager import DataManager
 from flight_search import FlightSearch
 from pprint import pprint
 from datetime import datetime, timedelta
+from flight_data import find_cheapest_flight
 
 data_manager = DataManager()
 sheet_data = data_manager.get_data()
@@ -15,11 +16,14 @@ six_months_from_now = six_months_from_now.strftime("%Y-%m-%d")
 
 
 flight_search = FlightSearch()
-flight_data = flight_search.check_flights(
-                            from_airport_code="LHR",
-                            to_airport_code=sheet_data[0]["iataCode"],
-                            from_time=tomorrow,
-                            to_time=six_months_from_now,
-)
-pprint(flight_data)
+for i in range(0,3):
+    flight_data = flight_search.check_flights(
+                                from_airport_code="LHR",
+                                to_airport_code=sheet_data[i]["iataCode"],
+                                from_time=tomorrow,
+                                to_time=six_months_from_now,
+    )
+    flight = find_cheapest_flight(flight_data, six_months_from_now)
+    pprint(f"{flight.destination_airport}: GBP {flight.price}")
+
 
