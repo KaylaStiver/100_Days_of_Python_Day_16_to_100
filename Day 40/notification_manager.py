@@ -1,28 +1,33 @@
+from vonage import Auth, Vonage
+from vonage_sms import SmsMessage, SmsResponse
 import os
-from twilio.rest import Client
-
-# Using a .env file to retrieve the phone numbers and tokens.
+from dotenv import load_dotenv
+import smtplib
 
 class NotificationManager:
-
     def __init__(self):
-        self.client = Client(os.environ['TWILIO_SID'], os.environ["TWILIO_AUTH_TOKEN"])
+        load_dotenv()
+        self.von_api_key = os.getenv("VON_API_KEY")
+        self.api_secret = os.getenv("API_SECRET")
+        self.email = os.getenv("EMAIL")
+        self.password = os.getenv("EMAIL_PASSWORD")
 
-    def send_sms(self, message_body):
-        message = self.client.messages.create(
-            from_=os.environ["TWILIO_VIRTUAL_NUMBER"],
-            body=message_body,
-            to=os.environ["TWILIO_VERIFIED_NUMBER"]
-        )
-        # Prints if successfully sent.
-        print(message.sid)
+    def send_message(self, notif_flights):
+        for flight in notif_flights:
+            client = Vonage(Auth(api_key=self.von_api_key, api_secret=self.api_secret))
+            message = SmsMessage(
+                to="19377015358",
+                from_="16265491364",
+                text=f"Low price alert! Only £{flight.price} to fly from {flight.origin_airport} to {flight.destination_airport}, "
+                     f"on {flight.out_date} to {flight.return_date}.",
+            )
+            response: SmsResponse = client.sms.send(message)
+            print(response)
 
-    # Is SMS not working for you or prefer whatsapp? Connect to the WhatsApp Sandbox!
-    # https://console.twilio.com/us1/develop/sms/try-it-out/whatsapp-learn
-    def send_whatsapp(self, message_body):
-        message = self.client.messages.create(
-            from_=f'whatsapp:{os.environ["TWILIO_WHATSAPP_NUMBER"]}',
-            body=message_body,
-            to=f'whatsapp:{os.environ["TWILIO_VERIFIED_NUMBER"]}'
-        )
-        print(message.sid)
+    def send_emails(self, email_list, email_body):
+        for email in email_list:
+            with smtplib.SMTP('smtp.gmail.com', 587) as connection:
+                connection.starttls()
+                connection.login(user=self.email, password=self.password)
+                connection.sendmail(from_addr=self.email, to_addrs=email,
+                                    msg=f"Subject:New Low Price Flight Alert!\n\n{email_body}")
