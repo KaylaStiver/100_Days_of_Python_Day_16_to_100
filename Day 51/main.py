@@ -23,10 +23,10 @@ class InternetSpeedTwitterBot:
         self.driver.get(SPEEDTEST_URL)
         go_btn = self.driver.find_element(By.XPATH, "/html/body/div[1]/div/div[1]/div/div[2]/div[2]/div[2]/div/div/div[2]/div[2]/button")
         go_btn.click()
-        sleep(180) # Wait 3 minutes for test to finish
+        sleep(60) # Wait a minute for test to finish
 
         # Dismiss irrelevant pop-up
-        dismiss_btn = self.driver.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/button/svg")
+        dismiss_btn = self.driver.find_element(By.XPATH, "/html/body/div[5]/div[3]/div/button")
         dismiss_btn.click()
         sleep(2)
 
