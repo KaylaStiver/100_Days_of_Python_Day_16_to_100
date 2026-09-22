@@ -1,12 +1,15 @@
 from time import sleep
+from dotenv import load_dotenv
 from selenium import webdriver
-from selenium.common import ElementClickInterceptedException
 from selenium.webdriver.common.by import By
+import os
+
+load_dotenv()
 
 PROMISED_DOWN = 1000
 PROMISED_UP = 1000
-Y_EMAIL = "kaylamailtesting@gmail.com"
-Y_PASSWORD = "5P7X9NAafSu4OdfB"
+Y_EMAIL = os.getenv("Y_EMAIL")
+Y_PASSWORD = os.getenv("Y_PASSWORD")
 Y_LOGIN_URL = "https://app.100daysofpython.dev/services/y/login"
 SPEEDTEST_URL = "https://www.speedtest.net/"
 
